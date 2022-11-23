@@ -1,27 +1,31 @@
-import { BASE_API, API_KEY } from '../utils/constants.js'
+import { BASE_API, API_KEY } from "../constants.js"
 
 export async function getCurrentWeather(lat, lon) {
-    const response = await fetch(`${BASE_API}weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`) 
-    if (!response.ok) return {
+   const response = await fetch(`${BASE_API}weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`)
+    if(!response.ok) return {
         isError: true,
         data: null
     }
-
     const data = await response.json()
-
     return {
         isError: false,
-        data: data,
+        data,
     }
-
 }
 
 
-function geolocationSupport() {
-    // if ('geolocation' in navigator){
-    //     return true
-    // }
-    // return false
-    return 'geolocation' in navigator
+export async function getWeeklyWeather(lat, lon) {
+    const response = await fetch(`${BASE_API}forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`)
+     if(!response.ok) return {
+         isError: true,
+         data: null
+     }
+     const data = await response.json()
+     return {
+         isError: false,
+         data,
+     }
+ }
+ 
 
-}
+
